@@ -92,5 +92,10 @@ classDiagram
     Usuario "1" <--o "1" Interesse : agrega
 ```
 
+## Herança Avançada
+Foi inserida a interface pura estrita `Inspecionavel`, utilizada para modelar a capacidade de inspecionar a residência. Esta interface foi adicionada às classes derivadas usando o princípio de herança múltipla.
+
+Além disso, a classe derivada `ImovelInteiro` foi assinalada com a palavra-chave `final`. Sendo uma definição arquitetônica de fim de linha, isso garante como regra de design que nenhum desenvolvedor futuro possa especializar esta classe e alterar equivocadamente a sua matemática inteiriça de cálculo de vagas.
+
 #### ---
 *Artur Rodrigues Nunes de Almeida - 20250018637 - Aluno de Ciência de Dados e Inteligência Artificial - Centro de Informática (CI) / UFPB*
