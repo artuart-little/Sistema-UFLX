@@ -10,15 +10,9 @@ O UFLX é um sistema de comércio de imóveis voltado para estudantes universit�
 
 ```mermaid
 classDiagram
-    
-    class Usuario {
-        -string nome_
-        -string telefone_
-        +Usuario(string nome, string contato)
-        +~Usuario()
-        +get_nome() string
-        +get_telefone() string
-        +validar_telefone() void
+    class Inspecionavel {
+        <<interface>>
+        +realizar_inspecao() void*
     }
 
     class Imovel {
@@ -44,12 +38,22 @@ classDiagram
         +verificar_localizacao() bool
         +realizar_inspecao() void
     }
-    
+
     class ImovelInteiro {
         +ImovelInteiro(int quartos, float aluguel, string bairro, float distancia)
         +~ImovelInteiro()
         +calcular_preco_vaga() float
         +realizar_inspecao() void
+    }
+
+    class Usuario {
+        -string nome_
+        -string telefone_
+        +Usuario(string nome, string contato)
+        +~Usuario()
+        +get_nome() string
+        +get_telefone() string
+        +validar_telefone() void
     }
 
     class Anuncio {
@@ -75,20 +79,17 @@ classDiagram
         +processar_interesse() void
     }
 
-    class Inspecionavel {
-        <<interface>>
-        +realizar_inspecao() void*
-    }
-
-    Imovel <|-- ImovelCompartilhado : herda
-    Imovel <|-- ImovelInteiro : herda
+    %% Reorganização hierárquica para evitar cruzamento de linhas
     Inspecionavel <|.. ImovelCompartilhado : implementa
     Inspecionavel <|.. ImovelInteiro : implementa
+    Imovel <|-- ImovelCompartilhado : herda
+    Imovel <|-- ImovelInteiro : herda
 
-    Anuncio "1" *-- "1" Imovel : compoe
-    Anuncio "1" o-- "1" Usuario : agrega
-    Interesse "1" o-- "1" Usuario : agrega
-    Interesse "1" o-- "1" Anuncio : observa (agrega)
+    %% Inversão da ordem de declaração para guiar o layout
+    Imovel "1" <--* "1" Anuncio : compoe
+    Usuario "1" <--o "1" Anuncio : agrega
+    Anuncio "1" <--o "1" Interesse : observa
+    Usuario "1" <--o "1" Interesse : agrega
 ```
 
 #### ---
