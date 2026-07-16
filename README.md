@@ -10,6 +10,7 @@ O UFLX é um sistema de comércio de imóveis voltado para estudantes universit�
 
 ```mermaid
 classDiagram
+    
     class Usuario {
         -string nome_
         -string telefone_
@@ -21,18 +22,34 @@ classDiagram
     }
 
     class Imovel {
-        -int quartos_disponiveis_
-        -float aluguel_mensal_
-        -string bairro_
-        -float distancia_ufpb_
+        <<abstract>>
+        #int quartos_disponiveis_
+        #float aluguel_mensal_
+        #string bairro_
+        #float distancia_ufpb_
         +Imovel(int quartos, float aluguel, string bairro, float distancia)
-        +~Imovel()
+        +virtual ~Imovel()
         +get_quartos_disponiveis() int
         +get_aluguel_mensal() float
         +get_bairro() string
         +get_distancia_ufpb() float
+        +calcular_preco_vaga() float*
+        +verificar_localizacao() bool
+    }
+
+    class ImovelCompartilhado {
+        +ImovelCompartilhado(int quartos, float aluguel, string bairro, float distancia)
+        +~ImovelCompartilhado()
         +calcular_preco_vaga() float
         +verificar_localizacao() bool
+        +realizar_inspecao() void
+    }
+    
+    class ImovelInteiro {
+        +ImovelInteiro(int quartos, float aluguel, string bairro, float distancia)
+        +~ImovelInteiro()
+        +calcular_preco_vaga() float
+        +realizar_inspecao() void
     }
 
     class Anuncio {
@@ -57,6 +74,16 @@ classDiagram
         +get_mensagem() string
         +processar_interesse() void
     }
+
+    class Inspecionavel {
+        <<interface>>
+        +realizar_inspecao() void*
+    }
+
+    Imovel <|-- ImovelCompartilhado : herda
+    Imovel <|-- ImovelInteiro : herda
+    Inspecionavel <|.. ImovelCompartilhado : implementa
+    Inspecionavel <|.. ImovelInteiro : implementa
 
     Anuncio "1" *-- "1" Imovel : compoe
     Anuncio "1" o-- "1" Usuario : agrega
