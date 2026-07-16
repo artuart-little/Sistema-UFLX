@@ -92,10 +92,16 @@ classDiagram
     Usuario "1" <--o "1" Interesse : agrega
 ```
 
+## Ciclo de Vida e Smart Pointers
+O sistema foi desenhado com gestão automática de memória, utilizando *smart pointers* de acordo com as seguintes regras de ciclo de vida:
+
+- **Composição (`std::unique_ptr`):** Utilizada na relação entre `Anuncio` e `Imovel`. O imóvel pertence exclusivamente ao anúncio e deixa de existir na memória do sistema caso o anúncio seja removido.
+- **Agregação (`std::shared_ptr`):** Utilizada na relação de `Usuario` com `Anuncio` e `Interesse`. Os locadores e estudantes são entidades independentes que continuam a existir na base de dados mesmo que os seus anúncios ou interesses sejam finalizados.
+- **Observação (`std::weak_ptr`):** Utilizado na classe `Interesse` para observar o `Anuncio` alvo. Isto evita *memory leaks* e permite que o sistema verifique com segurança se o anúncio ainda está ativo antes de tentar processar um interesse.
+
 ## Herança Avançada
 Foi inserida a interface puramente estrita `Inspecionavel`. Ela é utilizada para modelar a capacidade de inspecionar a residência. Esta interface foi adicionada às classes derivadas usando o princípio de herança múltipla.
 
 Além disso, a classe derivada `ImovelInteiro` foi assinalada com a palavra-chave `final`, garantindo assim, que nenhum desenvolvedor futuro possa alterar o seu funcionamento.
-
 #### ---
 *Artur Rodrigues Nunes de Almeida - 20250018637 - Aluno de Ciência de Dados e Inteligência Artificial - Centro de Informática (CI) / UFPB*
