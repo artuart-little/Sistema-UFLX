@@ -1,7 +1,8 @@
 #include "Usuario.h"
+#include "erros.h"
 #include <iostream>
 
-Usuario::Usuario(std::string nome, std::string contato) : nome_(nome), telefone_(contato) {
+Usuario::Usuario(std::string nome, std::string contato) : nome_(std::move(nome)), telefone_(std::move(contato)) {
     std::cout << "\nUsuario criado: " << nome_ << "\n";
 }
 
@@ -16,6 +17,7 @@ void Usuario::validar_telefone() const {
     if (telefone_.length() == 13) {
         std::cout << "Telefone validado com sucesso.\n";
     } else {
-        std::cout << "Telefone invalido. Deve ter 13 caracteres (Formato: 83 91234-5678)\n";
+        // Lança exceção de domínio em caso de erro real
+        throw TelefoneInvalido("O formato exige 13 caracteres. Inserido: " + telefone_);
     }
 }

@@ -1,7 +1,6 @@
 #ifndef ANUNCIO_H
 #define ANUNCIO_H
 
-#include <string>
 #include <memory>
 #include "Imovel.h"
 #include "Usuario.h"

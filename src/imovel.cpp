@@ -1,6 +1,6 @@
 #include "Imovel.h"
+#include "erros.h"
 #include <iostream>
-
 
 Imovel::Imovel(int quartos, float aluguel, std::string bairro, float distancia) 
     : quartos_disponiveis_(quartos), aluguel_mensal_(aluguel), bairro_(bairro), distancia_ufpb_(distancia) {
@@ -25,6 +25,11 @@ bool Imovel::verificar_localizacao() const {
 
 ImovelCompartilhado::ImovelCompartilhado(int quartos, float aluguel, std::string bairro, float distancia)
     : Imovel(quartos, aluguel, bairro, distancia) {
+    
+    if (quartos <= 0) {
+        throw ImovelInvalido("Imovel compartilhado deve ter pelo menos 1 quarto disponivel.");
+    }
+    
     std::cout << "Imovel Compartilhado instanciado.\n";
 }
 
@@ -64,3 +69,11 @@ void ImovelInteiro::realizar_inspecao() const {
 float ImovelInteiro::calcular_preco_vaga() const {
     return aluguel_mensal_;
 }   
+
+std::string ImovelCompartilhado::get_tipo() const {
+    return "ImovelCompartilhado";
+}
+
+std::string ImovelInteiro::get_tipo() const {
+    return "ImovelInteiro";
+}

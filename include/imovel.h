@@ -3,9 +3,10 @@
 
 #include <string>
 #include "Inspecionavel.h"
+#include "utilitarios.h"
 
 // Classe Base Abstrata
-class Imovel {
+class Imovel : public Contavel<Imovel> {
 protected:
     int quartos_disponiveis_;
     float aluguel_mensal_;
@@ -23,6 +24,7 @@ public:
     
     virtual float calcular_preco_vaga() const = 0; // Método virtual puro
     virtual bool verificar_localizacao() const;    // Método virtual não-puro
+    virtual std::string get_tipo() const = 0;
 };
 
 // Classe Derivada Concreta (Herança Múltipla)
@@ -34,6 +36,7 @@ public:
     float calcular_preco_vaga() const override;
     bool verificar_localizacao() const override;
     void realizar_inspecao() const override;
+    std::string get_tipo() const override;
 };
 
 // Classe Derivada Concreta Final
@@ -43,6 +46,7 @@ public:
     ~ImovelInteiro() override;
     void realizar_inspecao() const override;
     float calcular_preco_vaga() const override;
+    std::string get_tipo() const override;
 };
 
 #endif // IMOVEL_H
